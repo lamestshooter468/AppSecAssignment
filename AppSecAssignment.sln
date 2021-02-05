@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSecAssignment", "AppSecAssignment\AppSecAssignment.csproj", "{E736BF7C-073E-4E08-ADE5-42B0974BCF2D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39560EFA-0670-45A2-8475-E58237E11312} = {39560EFA-0670-45A2-8475-E58237E11312}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDB", "MyDB\MyDB.csproj", "{39560EFA-0670-45A2-8475-E58237E11312}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E736BF7C-073E-4E08-ADE5-42B0974BCF2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E736BF7C-073E-4E08-ADE5-42B0974BCF2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E736BF7C-073E-4E08-ADE5-42B0974BCF2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E736BF7C-073E-4E08-ADE5-42B0974BCF2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39560EFA-0670-45A2-8475-E58237E11312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39560EFA-0670-45A2-8475-E58237E11312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39560EFA-0670-45A2-8475-E58237E11312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39560EFA-0670-45A2-8475-E58237E11312}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {451E437A-B645-460D-865D-FA374CACC08B}
+	EndGlobalSection
+EndGlobal
