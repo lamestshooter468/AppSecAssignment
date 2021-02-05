@@ -27,13 +27,31 @@ namespace AppSecAssignment
 
         protected void ChgedPass_Click(object sender, EventArgs e)
         {
-            if (client.ValidateAccount(Session["LoggedIn"].ToString(), curr_pass.Text))
+            if (new_pass.Text == pass_retype.Text)
             {
-                if (client.ValidatePasswords(Session["LoggedIn"].ToString(), curr_pass.Text))
+                if (client.ValidateAccount(Session["LoggedIn"].ToString(), curr_pass.Text))
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Changed", "alert('Password Changed Successfully)", true);
-                    Response.Redirect("Home.aspx?", true);
+                    if (client.ValidatePasswords(Session["LoggedIn"].ToString(), new_pass.Text))
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Changed", "alert('Password Changed Successfully)", true);
+                        Response.Redirect("Home.aspx?", true);
+                    }
+                    else
+                    {
+                        errorLbl.Text = "New password cannot match previous 2 passwords.";
+                        errorLbl.Visible = true;
+                    }
                 }
+                else
+                {
+                    errorLbl.Text = "Current password is incorrect.";
+                    errorLbl.Visible = true;
+                }
+            }
+            else
+            {
+                errorLbl.Text = "New passwords do not match.";
+                errorLbl.Visible = true;
             }
         }
     }

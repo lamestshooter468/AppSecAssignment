@@ -69,6 +69,15 @@ namespace AppSecAssignment
         protected global::System.Web.UI.WebControls.TextBox new_pass;
 
         /// <summary>
+        /// regex control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regex;
+
+        /// <summary>
         /// Label3 control.
         /// </summary>
         /// <remarks>

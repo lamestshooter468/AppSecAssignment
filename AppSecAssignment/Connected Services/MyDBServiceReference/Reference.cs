@@ -107,6 +107,12 @@ namespace AppSecAssignment.MyDBServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidatePasswords", ReplyAction="http://tempuri.org/IService1/ValidatePasswordsResponse")]
         System.Threading.Tasks.Task<bool> ValidatePasswordsAsync(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getName", ReplyAction="http://tempuri.org/IService1/getNameResponse")]
+        string getName(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getName", ReplyAction="http://tempuri.org/IService1/getNameResponse")]
+        System.Threading.Tasks.Task<string> getNameAsync(string email);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -174,6 +180,14 @@ namespace AppSecAssignment.MyDBServiceReference {
         
         public System.Threading.Tasks.Task<bool> ValidatePasswordsAsync(string email, string password) {
             return base.Channel.ValidatePasswordsAsync(email, password);
+        }
+        
+        public string getName(string email) {
+            return base.Channel.getName(email);
+        }
+        
+        public System.Threading.Tasks.Task<string> getNameAsync(string email) {
+            return base.Channel.getNameAsync(email);
         }
     }
 }

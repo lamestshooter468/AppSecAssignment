@@ -329,12 +329,14 @@ namespace MyDB.Entity
                 }
             }
 
-            int updresult = UpdPassHist(id, email, password, get_salt(email, "PasswordSalt", true), get_hash(email, "PasswordHash", true), flag);
+            int updresult = UpdPassHist(id, email, get_salt(email, "PasswordSalt", true), get_hash(email, "PasswordHash", true), flag);
+            updresult = UpdPass(email, password);
 
             result = Convert.ToBoolean(updresult);
+
             return result;
         }
-        public int UpdPassHist(string id, string email, string new_pass, string pass1salt, string pass1hash, bool flag)
+        public int UpdPassHist(string id, string email, string pass1salt, string pass1hash, bool flag)
         {
             string MyDB = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
             SqlConnection myConn = new SqlConnection(MyDB);
@@ -371,6 +373,28 @@ namespace MyDB.Entity
             cmd.Parameters.AddWithValue("@Pass1Hash", pass1hash);
             cmd.Parameters.AddWithValue("@Id", Convert.ToInt16(id));
 
+            try
+            {
+                 myConn.Open();
+                 result = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            finally
+            {
+                myConn.Close();
+            }
+           
+
+            return result;
+        }
+        public int UpdPass(string email, string password)
+        {
+            int result;
+            string MyDB = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
+            SqlConnection myConn = new SqlConnection(MyDB);
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
             byte[] saltbyte = new byte[8];
             rng.GetBytes(saltbyte);
@@ -378,7 +402,7 @@ namespace MyDB.Entity
 
             SHA512Managed hashing = new SHA512Managed();
 
-            string pwd = new_pass + salt;
+            string pwd = password + salt;
             byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwd));
             string finalHash = Convert.ToBase64String(hashWithSalt);
 
@@ -391,8 +415,33 @@ namespace MyDB.Entity
             try
             {
                 myConn.Open();
-                result = cmd.ExecuteNonQuery();
                 result = newcmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            finally
+            {
+                myConn.Close();
+            }
+            return result;
+        }
+        public string getName(string email)
+        {
+            string result = "";
+            string MyDB = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
+            SqlConnection myConn = new SqlConnection(MyDB);
+            SqlCommand cmd = new SqlCommand("SELECT Fname FROM Account WHERE Email=@email;", myConn);
+            SqlCommand cmd2 = new SqlCommand("SELECT Fname FROM Account WHERE Email=@email;", myConn);
+
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd2.Parameters.AddWithValue("@email", email);
+
+            try
+            {
+                myConn.Open();
+                result = cmd.ExecuteScalar().ToString() + " " + cmd2.ExecuteScalar().ToString();
             }
             catch (Exception ex)
             {

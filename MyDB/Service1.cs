@@ -35,6 +35,12 @@ namespace MyDB
             return composite;
         }
 
+        public string getName(string email)
+        {
+            Account account = new Account();
+            return account.getName(email);
+        }
+
         public bool ValidateAccount(string email, string password)
         {
             Account account = new Account();

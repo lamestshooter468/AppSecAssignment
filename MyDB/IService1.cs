@@ -24,6 +24,8 @@ namespace MyDB
         bool ValidateAccount(string email, string password);
         [OperationContract]
         bool ValidatePasswords(string email, string password);
+        [OperationContract]
+        string getName(string email);
     }
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.

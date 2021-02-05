@@ -16,6 +16,7 @@ namespace AppSecAssignment
 {
     public partial class Login : System.Web.UI.Page
     {
+        int attempts = 0;
         MyDBServiceReference.Service1Client client = new MyDBServiceReference.Service1Client();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,7 +40,7 @@ namespace AppSecAssignment
         {
             bool result = true;
             string captchaResponse = Request.Form["g-captcha-response"];
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://www.google.com/recaptcha/api/siteverify?secret=6LdO5DYaAAAAAO_msCOFCBzoYVsCAwxtWWqXktyx &response=" + captchaResponse);
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://www.google.com/recaptcha/api/siteverify?secret=&response=" + captchaResponse);
             try
             {
                 using (WebResponse wResponse = req.GetResponse())
@@ -62,27 +63,37 @@ namespace AppSecAssignment
 
         protected void loginBtn_Click(object sender, EventArgs e)
         {
-            //if (ValidateCaptcha())
-            //{
-                if (client.ValidateAccount(tb_email.Text, tb_pass.Text))
+            if (attempts >= 3)
+            {
+                lbl_error.Text = "You have typed the wrong email or password 3 times. Your account has been locked out. Please try again later.";
+            }
+            else
+            {
+                if (ValidateCaptcha())
                 {
-                    Session["LoggedIn"] = tb_email.Text.ToString();
-                    string guID = Guid.NewGuid().ToString();
-                    Session["AuthToken"] = guID;
-                    Response.Cookies.Add(new HttpCookie("Authentication Token", guID));
-                    Response.Redirect("Home.aspx", false);
+                    if (client.ValidateAccount(tb_email.Text, tb_pass.Text))
+                    {
+                        Session["LoggedIn"] = tb_email.Text.ToString();
+                        string guID = Guid.NewGuid().ToString();
+                        Session["AuthToken"] = guID;
+                        Response.Cookies.Add(new HttpCookie("Authentication Token", guID));
+                        Response.Redirect("Home.aspx", false);
+                    }
+                    else
+                    {
+                        lbl_error.Text = "Your email or password is incorrect";
+                        lbl_error.Visible = true;
+                        attempts += 1;
+                    }
                 }
                 else
                 {
-                    lbl_error.Text = "Your email or password is incorrect";
+                    attempts += 1;
+                    lbl_error.Text = "Google has detected a bot.";
                     lbl_error.Visible = true;
                 }
-            //}
-            //else
-            //{
-            //    lbl_error.Text = "Google has detected a bot";
-            //    lbl_error.Visible = true;
-            //}
+            }
+            
         }
     }
 }

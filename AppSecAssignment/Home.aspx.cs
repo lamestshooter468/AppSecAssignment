@@ -9,6 +9,7 @@ namespace AppSecAssignment
 {
     public partial class Home : System.Web.UI.Page
     {
+        MyDBServiceReference.Service1Client client = new MyDBServiceReference.Service1Client();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["LoggedIn"] != null && Session["AuthToken"] != null && Request.Cookies["Authentication Token"] != null)
@@ -19,7 +20,7 @@ namespace AppSecAssignment
                 }
                 else
                 {
-                    Name.Text = "Test";
+                    Name.Text = "Welcome " + client.getName(Session["LoggedIn"].ToString());
                 }
             }
             else
